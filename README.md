@@ -4,6 +4,20 @@ Express Remote Control is a minimalist library to create hypermedia-inspired res
 
 Hypermedia API abstract the notion of URI and define workflows in term of 'rel'.
 
+## Installation
+
+Add this line to your package.json, under "dependencies":
+
+    "express-remote_control": "0.1.0"
+
+Then run:
+
+    $ npm install
+
+Or you can install it yourself as:
+
+    $ npm install express-remote_control
+
 ## Example app
 
     var express = require('express');
