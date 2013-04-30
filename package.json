@@ -1,0 +1,24 @@
+{
+  "name": "express-remote_control",
+  "version": "0.1.0",
+  "author": "Michael Sokol <mikaa123@gmail.com>",
+  "description": "A hypermedia-inspired rest api library for express.",
+  "main": "./lib/express-remote_control",
+  "scripts": {
+    "test": "mocha test/test.js --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url":  "git@github.com:mikaa123/express-remote_control.git"
+  },
+  "keywords": [
+    "hypermedia",
+    "api",
+    "rest"
+  ],
+  "devDependencies": {
+    "express": "3.x.x"
+    "mocha": "*"
+  },
+  "license": "MIT"
+}
