@@ -1,5 +1,7 @@
 # Express Remote Control
 
+[![Build Status](https://travis-ci.org/mikaa123/express-remote_control.png?branch=master)](https://travis-ci.org/mikaa123/express-remote_control)
+
 Express Remote Control is a minimalist library to create hypermedia-inspired rest APIs for express applications.
 
 Hypermedia API abstract the notion of URI and define workflows in term of 'rel'.
