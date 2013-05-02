@@ -29,15 +29,29 @@ describe('rc', function() {
       assert(rc.link);
     });
 
-    it("should throw an error f arity is < 3", function() {
+    it("should be passed exactly 2 arguments", function() {
       assert.throws(function() {
         rc.link();
-      }, /arity too small/);
+      }, /Options and process callback needed./);
 
       assert.doesNotThrow(function() {
-        rc.link('links-are-cool', 'here is some description', function() {});
-      }, /arity too small/);
-    })
+        rc.link({rel: 'foo', desc: 'bar'}, function() {});
+      }, /Options and process callback needed/);
+    });
+
+    describe('option', function() {
+      it('REQUIRES a rel attribute', function() {
+        assert.throws(function() {
+          rc.link({desc: 'bar'}, function() {});
+        }, /Options needs rel and desc./);
+      });
+
+      it('REQUIRES a desc attribute', function() {
+        assert.throws(function() {
+          rc.link({rel: 'bar'}, function() {});
+        }, /Options needs rel and desc./);
+      });
+    });
   });
 
   describe('#form', function() {
@@ -45,24 +59,45 @@ describe('rc', function() {
       assert(rc.form);
     });
 
-    it("should throw an error if arity is < 4", function() {
+    it("should be passed exactly 2 arguments", function() {
       assert.throws(function() {
         rc.form();
-      }, /arity too small/);
+      }, /Options and process callback needed./);
 
       assert.doesNotThrow(function() {
-        rc.form('links-are-cool', 
-          "Some documentation", {
-          action: 'GET'
-        }, function() {});
-      }, /arity too small/);
+        rc.form({rel: 'foo', desc: 'bar', formData: {action:'GET'}}, function() {});
+      }, /Options and process callback needed/);
+    });
+
+    describe('option', function() {
+      it('REQUIRES a rel attribute', function() {
+        assert.throws(function() {
+          rc.form({desc: 'bar', formData: {action: 'GET'}}, function() {});
+        }, /Options needs rel, desc and formData./);
+      });
+
+      it('REQUIRES a desc attribute', function() {
+        assert.throws(function() {
+          rc.form({rel: 'bar', formData: {action: 'GET'}}, function() {});
+        }, /Options needs rel, desc and formData./);
+      });
+
+      it('REQUIRES a formData attribute', function() {
+        assert.throws(function() {
+          rc.form({rel: 'bar', desc: 'foo'}, function() {});
+        }, /Options needs rel, desc and formData./);
+      });
     });
 
     describe('formData', function() {
       it("should have at least an 'action' option", function() {
         assert.throws(function() {
-          rc.form('formdata-test', "description", {}, function() {});
-        }, /formData does not have an action/);
+          rc.form({rel:'foo', desc:'bar', formData:{}}, function() {});
+        }, /formData does not have an action./);
+
+        assert.doesNotThrow(function() {
+          rc.form({rel:'foo', desc:'bar', formData:{action:'GET'}}, function() {});
+        }, /formData does not have an action./);
       });
     });
   });
@@ -95,8 +130,11 @@ describe('rc', function() {
 
       before(function() {
         rc.config({ root: '/api' });
-        links.forEach(function(l) { rc.link(l, 'docs', function() {}); });
-        forms.forEach(function(f) { rc.form(f.rel, 'docs', f.formData, function() {}); });
+        links.forEach(function(l) { rc.link({rel:l, desc:'d'}, function() {}); });
+        forms.forEach(function(f) { rc.form({
+          rel:f.rel, desc:'d', formData:f.formData },
+          function() {});
+        });
       });
 
       it("creates a route at 'config.root' with all the links", function() {

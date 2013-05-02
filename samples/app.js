@@ -10,6 +10,27 @@ rc.config({
   root: '/api'
 });
 
+rc.link({
+  rel: 'foo',
+  doc: 'This is the doc',
+}, function(req, res) {
+
+});
+
+rc.form({
+  rel: 'myform',
+  doc: 'here is the form',
+  formData: {
+    action: 'POST',
+    data: [{
+      name: 'filter',
+      value: ''
+    }]
+  }
+}, function(req, res) {
+  // Process form
+});
+
 // Remote Control gives you two tools to define your API.
 // Links - They take a 'rel' parameter and a callback.
 rc.link('foo',
