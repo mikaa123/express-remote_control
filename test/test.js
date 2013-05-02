@@ -1,7 +1,8 @@
+var libpath = process.env['RC_COV'] ? '../lib-cov' : '../lib';
 var assert = require("assert")
 
 describe('rc', function() {
-  var rc = require("./../lib/express-remote_control");
+  var rc = require(libpath + "/express-remote_control");
 
   describe('#config', function() {
     it('should be defined', function() {

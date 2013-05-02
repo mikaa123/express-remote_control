@@ -18,7 +18,10 @@
   ],
   "devDependencies": {
     "express": "3.x.x",
-    "mocha": "*"
+    "mocha": "*",
+    "coveralls": "2.0.7",
+    "jscoverage" : "0.3.6",
+    "mocha-lcov-reporter" : "0.0.1"
   },
   "license": "MIT"
 }
