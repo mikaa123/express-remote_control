@@ -28,13 +28,13 @@ describe('rc', function() {
       assert(rc.link);
     });
 
-    it("should throw an error if arity is < 2", function() {
+    it("should throw an error f arity is < 3", function() {
       assert.throws(function() {
         rc.link();
       }, /arity too small/);
 
       assert.doesNotThrow(function() {
-        rc.link('links-are-cool', function() {});
+        rc.link('links-are-cool', 'here is some description', function() {});
       }, /arity too small/);
     })
   });
@@ -44,13 +44,14 @@ describe('rc', function() {
       assert(rc.form);
     });
 
-    it("should throw an error if arity is < 3", function() {
+    it("should throw an error if arity is < 4", function() {
       assert.throws(function() {
         rc.form();
       }, /arity too small/);
 
       assert.doesNotThrow(function() {
-        rc.form('links-are-cool', {
+        rc.form('links-are-cool', 
+          "Some documentation", {
           action: 'GET'
         }, function() {});
       }, /arity too small/);
@@ -59,7 +60,7 @@ describe('rc', function() {
     describe('formData', function() {
       it("should have at least an 'action' option", function() {
         assert.throws(function() {
-          rc.form('formdata-test', {}, function() {});
+          rc.form('formdata-test', "description", {}, function() {});
         }, /formData does not have an action/);
       });
     });
@@ -93,8 +94,8 @@ describe('rc', function() {
 
       before(function() {
         rc.config({ root: '/api' });
-        links.forEach(function(l) { rc.link(l, function() {}); });
-        forms.forEach(function(f) { rc.form(f.rel, f.formData, function() {}); });
+        links.forEach(function(l) { rc.link(l, 'docs', function() {}); });
+        forms.forEach(function(f) { rc.form(f.rel, 'docs', f.formData, function() {}); });
       });
 
       it("creates a route at 'config.root' with all the links", function() {
