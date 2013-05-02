@@ -5,7 +5,7 @@
   "description": "A hypermedia-inspired rest api library for express.",
   "main": "./lib/express-remote_control",
   "scripts": {
-    "test": "mocha test/test.js --reporter spec"
+    "test": "make test-coveralls"
   },
   "repository": {
     "type": "git",
