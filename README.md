@@ -1,6 +1,6 @@
 # Express Remote Control
 
-[![Build Status](https://travis-ci.org/mikaa123/express-remote_control.png?branch=master)](https://travis-ci.org/mikaa123/express-remote_control)
+[![Build Status](https://travis-ci.org/mikaa123/express-remote_control.png?branch=master)](https://travis-ci.org/mikaa123/express-remote_control) [![Coverage Status](https://coveralls.io/repos/mikaa123/express-remote_control/badge.png?branch=master)](https://coveralls.io/r/mikaa123/express-remote_control)
 
 Express Remote Control is a minimalist library to create hypermedia-inspired rest APIs for express applications.
 
