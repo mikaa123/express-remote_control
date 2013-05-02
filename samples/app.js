@@ -11,57 +11,33 @@ rc.config({
 });
 
 rc.link({
-  rel: 'foo',
-  doc: 'This is the doc',
+  rel: 'consult-articles',
+  desc: 'Retrieves all the articles',
 }, function(req, res) {
-
+  res.send(JSON.stringify(articles));
 });
 
+// Forms
+// Creating a form automatically creates a link (GET) that returns the data
+// required to process the form.
 rc.form({
-  rel: 'myform',
-  doc: 'here is the form',
+  rel: 'create-article',
+  desc: 'Create an article',
   formData: {
     action: 'POST',
     data: [{
-      name: 'filter',
+      name: 'author',
+      value: ''
+    }, {
+      name: 'content',
       value: ''
     }]
   }
 }, function(req, res) {
-  // Process form
-});
+  var author = req.body.author,
+  content = req.body.content;
 
-// Remote Control gives you two tools to define your API.
-// Links - They take a 'rel' parameter and a callback.
-rc.link('foo',
-"Here is some documentation to describe foo.",
-  function(req, res) {
-  console.log("hey, I'm a link");
-});
-
-rc.link('bar',
-"Some docs",
-function(req, res) {
-  console.log("hey, I'm another link");
-});
-
-// Forms - They take a 'rel' parameter, a formData object, and a callback
-// Creating a form automatically creates a link (GET) that returns the data
-// required to process the form.
-rc.form('formidable',
-"Here is some documentation to describe formidable.",
-{
-  // This will determine the HTTP method to use
-  action: 'POST',
-  // This will be provided to the client, so they can
-  // programatically fill up the form.
-  data: [{
-    name: 'filter',
-    value: ''
-  }]
-}, function(req, res) {
-  console.log("Hey, I'm a form.");
-  console.log(req.body.filter);
+  console.log('An article is being written...');
 });
 
 rc(app);

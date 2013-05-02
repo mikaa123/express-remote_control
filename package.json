@@ -1,6 +1,6 @@
 {
   "name": "express-remote_control",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Michael Sokol <mikaa123@gmail.com>",
   "description": "A hypermedia-inspired rest api library for express.",
   "main": "./lib/express-remote_control",
