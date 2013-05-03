@@ -1,5 +1,6 @@
 var libpath = process.env['RC_COV'] ? '../lib-cov' : '../lib';
-var assert = require("assert")
+var assert = require("assert");
+var request = require('supertest');
 
 describe('rc', function() {
   var rc = require(libpath + "/express-remote_control");
@@ -148,6 +149,16 @@ describe('rc', function() {
         var routesGet = app.routes.get.map(function(route) { return route.path });
         forms.forEach(function(f) { 
           assert.notEqual(-1, routesGet.indexOf('/api/' + f.rel + '-form')); 
+        });
+      });
+
+      describe("/GET on `root`", function() {
+        it("should respond with json", function(done) {
+          request(app)
+            .get("/api")
+            .set("Accept", "application/json")
+            .expect("Content-Type", /json/)
+            .expect(200, done);
         });
       });
     });
