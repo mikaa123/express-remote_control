@@ -20,92 +20,103 @@ Or you can install it yourself as:
 
 ## How it works
 
-express-remote_control use its own media type which is based on json.
-It defines *resources* in terms of *links* and *forms*. It is inspired from the HAL media type (application/hal+json) but aims to be simpler.
+express-remote_control allows you to define *processes*. They can be either _links_ or _forms_ which will determinate how the client access them. The _resources_ returned by these processes is left to the user.
 
-Using express-remote_control you can only define the entry-point resource of your API.
+express-remote_control takes all the defined processes and set them as *links* on the api's entry point. The entry point's media type is based on json. It defines links like that:
 
-This entry point can be describe using the provided #link and #form method. They both take a callback which will be executed each time the link or the form is visited.
+```javascript
+{
+  "links":[
+    {"rel":"foo","href":"/foo"},
+    {"rel":"bar","href":"/bar"},
+    {"rel":"formidable-form","href":"/formidable-form"}
+  ]
+}
+```
 
-Links are listed as follows:
+Forms are described as follow:
 
-    {
-      "links":[
-        {"rel":"foo","href":"/foo"},
-        {"rel":"bar","href":"/bar"},
-        {"rel":"formidable-form","href":"/formidable-form"}
-      ]
-    }
-
-Forms, as follow:
-
-    { 
-      forms: [{
-        action: "POST",
-        data: [{
-          name: "filter",
-          value: ""
-        }],
-        rel: "formidable",
-        href: "/formidable"
-      }]
-    }
+```javascript
+{ 
+  forms: [{
+    action: "POST",
+    data: [{
+      name: "filter",
+      value: ""
+    }],
+    rel: "formidable",
+    href: "/formidable"
+  }]
+}
+```
 
 ## Usage
 
 Create an express application, such as:
 
-    var express = require('express');
-    var app     = express();
+```javascript
+var express = require('express');
+var app = express();
+```
 
 `require` express-remote_control
 
-    var rc = require('../lib/express-remote_control');
+```javascript
+var rc = require('express-remote_control');
+```
 
 Configure it by providing the root uri fragment for your api:
 
-    rc.config({
-      root: '/api'
-    });
+```javascript
+rc.config({
+  root: '/api'
+});
+```
 
 Now you can add links:
 
-    rc.link({
-      rel: 'consult-articles',
-      desc: 'Retrieves all the articles',
-    }, function(req, res) {
-      res.send(JSON.stringify(articles));
-    });
+```javascript
+rc.link({
+  rel: 'consult-articles',
+  desc: 'Retrieves all the articles',
+}, function(req, res) {
+  res.send(JSON.stringify(articles));
+});
+```
 
 The callback above will be executed upon a GET request on /api/consult-articles.
 
 You can also define forms using the #form method:
 
-    rc.form({
-      rel: 'create-article',
-      desc: 'Create an article',
-      formData: {
-        action: 'POST',
-        data: [{
-          name: 'author',
-          value: ''
-        }, {
-          name: 'content',
-          value: ''
-        }]
-      }
-    }, function(req, res) {
-      var author = req.body.author,
-        content = req.body.content;
+```javascript
+rc.form({
+  rel: 'create-article',
+  desc: 'Create an article',
+  formData: {
+    action: 'POST',
+    data: [{
+      name: 'author',
+      value: ''
+    }, {
+      name: 'content',
+      value: ''
+    }]
+  }
+}, function(req, res) {
+  var author = req.body.author,
+    content = req.body.content;
 
-      console.log('An article is being written...');
-    });
+  console.log('An article is being written...');
+});
+```
 
 Creating a form using the #form method creates a link on API with a rel being 'form-rel-form', i.e. create-article-form in this case.
 
 Finally, to create the routes, pass the express app to the constructor function:
 
-    rc(app);
+```javascript
+rc(app);
+```
 
 And now
 
